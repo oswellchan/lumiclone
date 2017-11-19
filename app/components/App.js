@@ -1,7 +1,8 @@
 const React = require('react');
+import { Game } from './Game';
 
 export class App extends React.Component {
   render() {
-    return <h1>Hello World</h1>;
+    return <Game row={10} col={16} />;
   }
 }
