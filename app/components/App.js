@@ -1,4 +1,4 @@
-var React = require('react');
+const React = require('react');
 
 export class App extends React.Component {
   render() {
