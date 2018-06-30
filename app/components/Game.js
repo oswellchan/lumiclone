@@ -1,46 +1,50 @@
 const React = require('react');
+import { CompositeBlock } from '../structs/CompositeBlock';
+import { Board } from '../structs/Board';
+import { Queue } from '../structs/Queue';
 import { Engine } from './Engine';
 import { Screen } from './Screen';
-
-export const BlockStateEnum = {
-  NORMAL: 0,
-  ACTIVE: 1,
-  INACTIVE: 2
-};
-
-export const BlockTypeEnum = {
-  NONE: 0,
-  T1: 1,
-  T2: 2
-};
 
 export class Game extends React.Component {
   constructor(props) {
     super(props);
+
+    let nextBlocks = new Queue();
+    for (let i = 0; i < 3; i += 1) {
+      nextBlocks.enqueue(new CompositeBlock(2, 2));
+    }
+
     this.state = {
-      grid: this.generateEmptyGrid(this.props.row, this.props.col)
+      grid: new Board(this.props.width, this.props.height),
+      currBlock: new CompositeBlock(2, 2),
+      nextBlocks: nextBlocks,
+      currBlockLocation: this.generateBlockStartingPos()
+    };
+
+    this.handleGridUpdate = this.handleGridUpdate.bind(this);
+  }
+
+  generateBlockStartingPos() {
+    return {
+      x: Math.floor(this.props.col / 2) - 1,
+      y: 0
     };
   }
 
-  generateEmptyGrid(row, col) {
-    let grid = [];
-    for (let i = 0; i < row; i += 1) {
-      let tempRow = [];
-      for (let j = 0; j < col; j += 1) {
-        tempRow.push({
-          type: BlockTypeEnum.NONE,
-          state: BlockStateEnum.NORMAL
-        });
-      }
-      grid.push(tempRow);
-    }
-    return grid;
+  handleGridUpdate(grid) {
+    this.setState({
+      grid: grid
+    });
   }
 
   render() {
     return (
       <div>
-        <Engine grid={this.state.grid} />
+        <Engine
+          grid={this.state.grid}
+          currBlock={this.state.currBlock}
+          currBlockLocation={this.state.currBlockLocation}
+          updateGrid={this.handleGridUpdate} />
         <Screen grid={this.state.grid} />
       </div>
     );

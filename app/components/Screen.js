@@ -1,5 +1,5 @@
 const React = require('react');
-import { BlockStateEnum, BlockTypeEnum } from './Game';
+import { BlockTypeEnum } from '../structs/Constants';
 
 const tableStyle = {
   backgroundColor: 'black',
@@ -32,14 +32,17 @@ export class Screen extends React.Component {
   }
 
   render() {
-    let grid = this.props.grid;
-    let table = grid.map((row, i) => {
-      let trow = row.map((block, j) => {
-        let style = this.generateCellStyle(block);
-        return <th key={j} style={ style } />;
-      });
-      return <tr key={i}>{trow}</tr>;
-    });
+    const grid = this.props.grid.getGrid();
+    console.log(grid);
+    const table = [];
+    for (let y = 0; y < grid[0].length; y += 1) {
+      const row = [];
+      for (let x = 0; x < grid.length; x += 1) {
+        const style = this.generateCellStyle(grid[x][y]);
+        row.push(<th key={x} style={ style } />);
+      }
+      table.push(<tr key={y}>{row}</tr>);
+    }
     return <table style={ tableStyle }><tbody>{table}</tbody></table>;
   }
 }
