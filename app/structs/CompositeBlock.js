@@ -32,13 +32,25 @@ export class CompositeBlock {
     return this.grid;
   }
 
-  setBlockAt(x, y, { type = null, state = null }) {
+  getValue(x, y) {
     if (x < 0 || x >= this.grid.length) {
       throw new Error('Array out of bounds');
     }
 
     if (y < 0 || y >= this.grid[0].length) {
       throw new Error('Array out of bounds');
+    }
+
+    return this.grid[x][y];
+  }
+
+  setBlockAt(x, y, { type = null, state = null }) {
+    if (x < 0 || x >= this.grid.length) {
+      throw new Error(`Array out of bounds: ${x}, ${y}`);
+    }
+
+    if (y < 0 || y >= this.grid[0].length) {
+      throw new Error(`Array out of bounds: ${x}, ${y}`);
     }
 
     if (type !== null) {

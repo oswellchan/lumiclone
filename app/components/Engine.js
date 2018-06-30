@@ -29,7 +29,14 @@ export class Engine extends React.Component {
   }
 
   resolveCollision() {
+    const grid = this.props.grid;
+    const block = this.props.currBlock;
+    const loc = this.props.currBlockLocation;
 
+    if (grid.isOverlap(loc.x, loc.y, block)) {
+      grid.addBlock(loc.x, block);
+      this.props.updateQueue();
+    }
   }
 
   render() {
