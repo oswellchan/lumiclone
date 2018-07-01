@@ -1,4 +1,5 @@
-import { BlockStateEnum, BlockTypeEnum } from './Constants';
+import { BlockStateEnum, BlockTypeEnum } from '../utils/constants';
+import { rotateMatrix, rotateMatrixCounterClockwise } from '../utils/utils'
 
 export class CompositeBlock {
   constructor(length, height) {
@@ -60,5 +61,13 @@ export class CompositeBlock {
     if (state !== null) {
       this.grid[x][y].state = state;
     }
+  }
+
+  rotateRight() {
+    this.grid = rotateMatrixCounterClockwise(this.grid);
+  }
+
+  rotateLeft() {
+    this.grid = rotateMatrix(this.grid);
   }
 }

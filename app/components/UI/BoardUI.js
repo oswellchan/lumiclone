@@ -1,6 +1,6 @@
 const React = require('react');
-import { BlockTypeEnum } from '../../structs/Constants';
-import { Orange, OffWhite } from './Constants';
+import { BlockTypeEnum } from '../../utils/constants';
+import { Orange, OffWhite } from './constants';
 
 const tableStyle = {
   backgroundColor: 'black',

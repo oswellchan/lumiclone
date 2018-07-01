@@ -1,5 +1,5 @@
 import { CompositeBlock } from './CompositeBlock';
-import { BlockTypeEnum } from './Constants';
+import { BlockTypeEnum } from '../utils/constants';
 
 export class Board extends CompositeBlock {
   constructor(length, height) {

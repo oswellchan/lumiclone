@@ -1,8 +1,8 @@
 const React = require('react');
 import { CompositeBlock } from '../structs/CompositeBlock';
-import { BlockStateEnum, BlockTypeEnum } from '../structs/Constants';
 import { Board } from '../structs/Board';
 import { Queue } from '../structs/Queue';
+import { BlockStateEnum, BlockTypeEnum } from '../utils/constants';
 import { Engine } from './Engine';
 import { Screen } from './Screen';
 
@@ -19,7 +19,8 @@ export class Game extends React.Component {
       grid: new Board(this.props.length, this.props.height),
       currBlock: this.generateNextBlock(),
       nextBlocks: nextBlocks,
-      currBlockLocation: this.generateBlockStartingPos()
+      currBlockLocation: this.generateBlockStartingPos(),
+      instructions: null
     };
 
     this.handleGridUpdate = this.handleGridUpdate.bind(this);

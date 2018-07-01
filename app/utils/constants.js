@@ -9,3 +9,11 @@ export const BlockTypeEnum = {
   T1: 1,
   T2: 2
 };
+
+export const Instructions = {
+  LEFT: 0,
+  RIGHT: 1,
+  DOWN: 2,
+  ROTATE_L: 3,
+  ROTATE_R: 4
+};

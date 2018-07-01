@@ -26,9 +26,11 @@ export class Queue {
 
     const deq = this.store[this.current];
     if (this.current > this.store.length / 2) {
-      this.store = this.store.slice(0, this.current);
+      this.store = this.store.slice(this.current, this.store.length);
       this.current = 0;
     }
+
+    this.current += 1;
 
     return deq;
   }
