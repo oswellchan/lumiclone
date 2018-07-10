@@ -20,6 +20,7 @@ export class BoardUI extends React.Component {
       return cellStyle;
     }
     let style = Object.assign({}, cellStyle);
+    style.border = '1px solid black';
     if (block.type === BlockTypeEnum.T1) {
       style.backgroundColor = Orange;
     }
