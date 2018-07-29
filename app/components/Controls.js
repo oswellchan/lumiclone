@@ -6,11 +6,11 @@ export class Controls extends React.Component {
   constructor(props) {
     super(props);
     this.keyMapping = {
-      LEFT: 'l',
-      RIGHT: '\'',
-      DOWN: ';',
-      ROTATE_L: 's',
-      ROTATE_R: 'd'
+      LEFT: 'a',
+      RIGHT: 'd',
+      DOWN: 's',
+      ROTATE_L: 'l',
+      ROTATE_R: 'k'
     };
     this.updateID = null;
 

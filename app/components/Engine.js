@@ -31,7 +31,10 @@ export class Engine extends React.Component {
     const loc = this.props.currBlockLocation;
 
     if (grid.isOverlap(loc.x, loc.y, block)) {
-      grid.addBlock(loc.x, block);
+      if (loc.y !== 0) {
+        grid.addBlock(loc.x, block);
+      }
+
       this.props.updateQueue();
       this.newBlockTs = now();
       this.startNewDropTimer();

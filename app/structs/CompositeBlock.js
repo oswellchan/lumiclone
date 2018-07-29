@@ -1,5 +1,5 @@
 import { BlockStateEnum, BlockTypeEnum } from '../utils/constants';
-import { rotateMatrix, rotateMatrixCounterClockwise } from '../utils/utils'
+import { rotateMatrix, rotateMatrixCounterClockwise } from '../utils/utils';
 
 export class CompositeBlock {
   constructor(length, height) {
@@ -9,7 +9,8 @@ export class CompositeBlock {
       for (let j = 0; j < height; j += 1) {
         tempRow.push({
           type: BlockTypeEnum.NONE,
-          state: BlockStateEnum.NORMAL
+          state: BlockStateEnum.NORMAL,
+          count: null
         });
       }
       this.grid.push(tempRow);
@@ -45,7 +46,7 @@ export class CompositeBlock {
     return this.grid[x][y];
   }
 
-  setBlockAt(x, y, { type = null, state = null }) {
+  setBlockAt(x, y, { type = null, state = null, count = null }) {
     if (x < 0 || x >= this.grid.length) {
       throw new Error(`Array out of bounds: ${x}, ${y}`);
     }
@@ -60,6 +61,10 @@ export class CompositeBlock {
 
     if (state !== null) {
       this.grid[x][y].state = state;
+    }
+
+    if (state !== null) {
+      this.grid[x][y].count = count;
     }
   }
 
