@@ -9,60 +9,73 @@ const tableStyle = {
 };
 
 const cellStyle = {
-  border: '1px solid gray',
-  width: 40,
-  height: 40
+  border: '2px solid gray',
+  width: '42px',
+  height: '42px',
+  boxSizing: 'border-box'
 };
 
 const TOP_LEFT_STYLE = {
-  borderLeft: '3px solid white',
-  borderTop: '3px solid white'
+  borderLeft: '4px solid white',
+  borderTop: '4px solid white',
+  borderRight: '4px solid transparent',
+  borderBottom: '4px solid transparent'
 };
 
 const TOP_RIGHT_STYLE = {
-  borderTop: '3px solid white',
-  borderRight: '3px solid white'
+  borderLeft: '4px solid transparent',
+  borderTop: '4px solid white',
+  borderRight: '4px solid white',
+  borderBottom: '4px solid transparent'
 };
 
 const BTM_LEFT_STYLE = {
-  borderLeft: '3px solid white',
-  borderBottom: '3px solid white'
+  borderLeft: '4px solid white',
+  borderTop: '4px solid transparent',
+  borderRight: '4px solid transparent',
+  borderBottom: '4px solid white'
 };
 
 const BTM_RIGHT_STYLE = {
-  borderRight: '3px solid white',
-  borderBottom: '3px solid white'
+  borderLeft: '4px solid transparent',
+  borderTop: '4px solid transparent',
+  borderRight: '4px solid white',
+  borderBottom: '4px solid white'
 };
 
 const TOP_STYLE = {
-  borderLeft: '3px solid white',
-  borderTop: '3px solid white',
-  borderRight: '3px solid white'
+  borderLeft: '4px solid white',
+  borderTop: '4px solid white',
+  borderRight: '4px solid white',
+  borderBottom: '4px solid transparent'
 };
 
 const LEFT_STYLE = {
-  borderLeft: '3px solid white',
-  borderTop: '3px solid white',
-  borderBottom: '3px solid white'
+  borderLeft: '4px solid white',
+  borderTop: '4px solid white',
+  borderRight: '4px solid transparent',
+  borderBottom: '4px solid white'
 };
 
 const RIGHT_STYLE = {
-  borderTop: '3px solid white',
-  borderRight: '3px solid white',
-  borderBottom: '3px solid white'
+  borderLeft: '4px solid transparent',
+  borderTop: '4px solid white',
+  borderRight: '4px solid white',
+  borderBottom: '4px solid white'
 };
 
 const BTM_STYLE = {
-  borderLeft: '3px solid white',
-  borderRight: '3px solid white',
-  borderBottom: '3px solid white'
+  borderLeft: '4px solid white',
+  borderTop: '4px solid transparent',
+  borderRight: '4px solid white',
+  borderBottom: '4px solid white'
 };
 
 const SQUARE_STYLE = {
-  borderLeft: '3px solid white',
-  borderTop: '3px solid white',
-  borderRight: '3px solid white',
-  borderBottom: '3px solid white'
+  borderLeft: '4px solid white',
+  borderTop: '4px solid white',
+  borderRight: '4px solid white',
+  borderBottom: '4px solid white'
 };
 
 const TOP_LEFT_2X2 = ((1 << 2) - 1) << 7 | ((1 << 2) - 1) << 4; // 110110000
@@ -86,7 +99,7 @@ export class BoardUI extends React.Component {
     }
 
     let style = Object.assign({}, cellStyle);
-    style.border = '1px solid black';
+    style.border = '2px solid black';
     if (block.type === BlockTypeEnum.T1) {
       if (block.state === BlockStateEnum.NORMAL) {
         style.backgroundColor = Orange;
@@ -106,18 +119,22 @@ export class BoardUI extends React.Component {
     return style;
   }
 
+  generateCell(key, style) {
+    return <th key={ key } style={ style } />;
+  }
+
   setGridStyle(x, y, table, has_set) {
     if (has_set[y][x]) { return; }
 
     const block = this.props.grid.getValue(x, y);
     let style = this.generateCellStyle(block);
-    if (block.type === BlockStateEnum.NORMAL || block.count === 0) {
+    if (block.state === BlockStateEnum.NORMAL || !block.count) {
       has_set[y][x] = true;
-      table[y][x] = <th key={ x } style={ style } />;
+      table[y][x] = this.generateCell(x, style);
       return;
     }
 
-    const pattern = this.getPattern(x - 1, y - 1, block.count);
+    const pattern = this.getPattern(x, y, block);
 
     switch (pattern) {
       case TOP_LEFT_2X2:
@@ -136,83 +153,83 @@ export class BoardUI extends React.Component {
         has_set[y][x] = true;
         let btm_style = Object.assign({}, style, BTM_STYLE);
         delete btm_style.border;
-        table[y][x] = <th key={ x } style={ btm_style } />;
+        table[y][x] = this.generateCell(x, btm_style);
 
         has_set[y - 1][x] = true;
         let tr_style = Object.assign({}, style, TOP_RIGHT_STYLE);
         delete tr_style.border;
-        table[y - 1][x] = <th key={ x } style={ tr_style } />;
+        table[y - 1][x] = this.generateCell(x, tr_style);
 
         has_set[y - 1][x - 1] = true;
         let l_style = Object.assign({}, style, LEFT_STYLE);
         delete l_style.border;
-        table[y - 1][x - 1] = <th key={ x - 1} style={ l_style } />;
+        table[y - 1][x - 1] = this.generateCell(x - 1, l_style);
         break;
       case LEFT_CORNER:
         has_set[y][x] = true;
         let btm_style1 = Object.assign({}, style, BTM_STYLE);
         delete btm_style1.border;
-        table[y][x] = <th key={ x } style={ btm_style1 } />;
+        table[y][x] = this.generateCell(x, btm_style1);
 
         has_set[y - 1][x] = true;
         let tl_style = Object.assign({}, style, TOP_LEFT_STYLE);
         delete tl_style.border;
-        table[y - 1][x] = <th key={ x } style={ tl_style } />;
+        table[y - 1][x] = this.generateCell(x, tl_style);
 
         has_set[y - 1][x + 1] = true;
         let r_style = Object.assign({}, style, RIGHT_STYLE);
         delete r_style.border;
-        table[y - 1][x + 1] = <th key={ x + 1 } style={ r_style } />;
+        table[y - 1][x + 1] = this.generateCell(x + 1, r_style);
         break;
       case LEFT_2X1:
         has_set[y][x] = true;
         let r_style1 = Object.assign({}, style, RIGHT_STYLE);
         delete r_style1.border;
-        table[y][x] = <th key={ x } style={ r_style1 } />;
+        table[y][x] = this.generateCell(x, r_style1);
 
         has_set[y][x - 1] = true;
         let l_style1 = Object.assign({}, style, LEFT_STYLE);
         delete l_style1.border;
-        table[y][x - 1] = <th key={ x - 1 } style={ l_style1 } />;
+        table[y][x - 1] = this.generateCell(x - 1, l_style1);
         break;
       case TOP_1X2:
         has_set[y][x] = true;
         let btm_style2 = Object.assign({}, style, BTM_STYLE);
         delete btm_style2.border;
-        table[y][x] = <th key={ x } style={ btm_style2 } />;
+        table[y][x] = this.generateCell(x, btm_style2);
 
         has_set[y - 1][x] = true;
         let top_style = Object.assign({}, style, TOP_STYLE);
         delete top_style.border;
-        table[y - 1][x] = <th key={ x } style={ top_style } />;
+        table[y - 1][x] = this.generateCell(x, top_style);
         break;
       case RIGHT_2X1:
         has_set[y][x + 1] = true;
         let r_style2 = Object.assign({}, style, RIGHT_STYLE);
         delete r_style2.border;
-        table[y][x + 1] = <th key={ x + 1 } style={ r_style2 } />;
+        table[y][x + 1] = this.generateCell(x + 1, r_style2);
 
         has_set[y][x] = true;
         let l_style2 = Object.assign({}, style, LEFT_STYLE);
         delete l_style2.border;
-        table[y][x] = <th key={ x } style={ l_style2 } />;
+        table[y][x] = this.generateCell(x, l_style2);
         break;
       case BTM_1X2 :
         has_set[y + 1][x] = true;
         let btm_style3 = Object.assign({}, style, BTM_STYLE);
         delete btm_style3.border;
-        table[y + 1][x] = <th key={ x } style={ btm_style3 } />;
+        table[y + 1][x] = this.generateCell(x, btm_style3);
 
         has_set[y][x] = true;
         let top_style2 = Object.assign({}, style, TOP_STYLE);
         delete top_style2.border;
-        table[y][x] = <th key={ x } style={ top_style2 } />;
+        table[y][x] = this.generateCell(x, top_style2);
         break;
       default:
         has_set[y][x] = true;
         let sq_style = Object.assign({}, style, SQUARE_STYLE);
         delete sq_style.border;
-        table[y][x] = <th key={ x } style={ sq_style } />;
+        table[y][x] = this.generateCell(x, sq_style);
     }
   }
 
@@ -220,36 +237,37 @@ export class BoardUI extends React.Component {
     has_set[y][x] = true;
     let tl_style = Object.assign({}, style, TOP_LEFT_STYLE);
     delete tl_style.border;
-    table[y][x] = <th key={ x } style={ tl_style } />;
+    table[y][x] = this.generateCell(x, tl_style);
 
     has_set[y][x + 1] = true;
     let tr_style = Object.assign({}, style, TOP_RIGHT_STYLE);
     delete tr_style.border;
-    table[y][x + 1] = <th key={ x + 1 } style={ tr_style } />;
+    table[y][x + 1] = this.generateCell(x + 1, tr_style);
 
     has_set[y + 1][x] = true;
     let bl_style = Object.assign({}, style, BTM_LEFT_STYLE);
     delete bl_style.border;
-    table[y + 1][x] = <th key={ x } style={ bl_style } />;
+    table[y + 1][x] = this.generateCell(x, bl_style);
 
     has_set[y + 1][x + 1] = true;
     let br_style = Object.assign({}, style, BTM_RIGHT_STYLE);
     delete br_style.border;
-    table[y + 1][x + 1] = <th key={ x + 1 } style={ br_style } />;
+    table[y + 1][x + 1] = this.generateCell(x + 1, br_style);
   }
 
   // Returns bit array of blocks in 3x3 block around x,y
-  getPattern(x, y, count) {
-    if (!count) { return 0; }
+  getPattern(x, y, start_block) {
+    if (!start_block.count) { return 0; }
 
     let pattern = 0;
     let idx = 9;
 
-    for (let i = 0; i < 3; i += 1) {
-      for (let j = 0; j < 3; j += 1) {
+    for (let i = -1; i <= 1; i += 1) {
+      for (let j = -1; j <= 1; j += 1) {
         idx -= 1;
         try {
-          if (this.props.grid.getValue(x + j, y + i).count === count) {
+          const block = this.props.grid.getValue(x + j, y + i);
+          if (block.count === start_block.count && block.type === start_block.type) {
             pattern |= (1 << idx);
           }
         } catch (err) {
@@ -287,7 +305,7 @@ export class BoardUI extends React.Component {
     for (let y = 0; y < this.props.currBlock.getHeight(); y += 1) {
       for (let x = 0; x < this.props.currBlock.getLength(); x += 1) {
         const style = this.generateCellStyle(this.props.currBlock.getValue(x, y));
-        table[loc.y + y][loc.x + x] = <th key={loc.x + x} style={ style } />;
+        table[loc.y + y][loc.x + x] = this.generateCell(loc.x + x, style);
       }
     }
 
