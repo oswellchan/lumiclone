@@ -20,11 +20,15 @@ export class Game extends React.Component {
       currBlock: this.generateNextBlock(),
       nextBlocks: nextBlocks,
       currBlockLocation: this.generateBlockStartingPos(),
-      instructions: null
+      instructions: null,
+      linePosition: 0,
+      currCount: 0,
+      totalCount: 0
     };
 
     this.handleGridUpdate = this.handleGridUpdate.bind(this);
     this.handleQueueUpdate = this.handleQueueUpdate.bind(this);
+    this.handleLineUpdate = this.handleLineUpdate.bind(this);
   }
 
   generateNextBlock() {
@@ -66,6 +70,22 @@ export class Game extends React.Component {
     });
   }
 
+  handleLineUpdate(position, count) {
+    let currCount = this.state.currCount + count;
+    let totalCount = this.state.totalCount;
+
+    if (Math.floor(position) === 0) {
+      totalCount += currCount;
+      currCount = 0;
+    }
+
+    this.setState({
+      linePosition: position,
+      currCount: currCount,
+      totalCount: totalCount
+    });
+  }
+
   render() {
     return (
       <div>
@@ -73,13 +93,16 @@ export class Game extends React.Component {
           grid={this.state.grid}
           currBlock={this.state.currBlock}
           currBlockLocation={this.state.currBlockLocation}
+          linePosition={this.state.linePosition}
           updateGrid={this.handleGridUpdate}
-          updateQueue={this.handleQueueUpdate} />
+          updateQueue={this.handleQueueUpdate}
+          updateLinePosition={this.handleLineUpdate}/>
         <Screen
           grid={this.state.grid}
           currBlock={this.state.currBlock}
           currBlockLocation={this.state.currBlockLocation}
-          queue={this.state.queue} />
+          queue={this.state.queue}
+          linePosition={this.state.linePosition}/>
       </div>
     );
   }

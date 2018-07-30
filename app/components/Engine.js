@@ -3,6 +3,9 @@ import { Instructions } from '../utils/constants';
 import { now } from '../utils/utils';
 import { Controls } from './Controls';
 
+const FRAME_RATE = 30; // frame per sec
+const LINE_SPEED = 4; // blocks per sec
+
 export class Engine extends React.Component {
   constructor(props) {
     super(props);
@@ -13,10 +16,12 @@ export class Engine extends React.Component {
 
   componentDidMount() {
     this.startNewDropTimer();
+    this.startLineTimer();
   }
 
   componentWillUnmount() {
     clearInterval(this.blockDropID);
+    clearInterval(this.lineID);
   }
 
   blockDrop() {
@@ -39,6 +44,20 @@ export class Engine extends React.Component {
       this.newBlockTs = now();
       this.startNewDropTimer();
     }
+  }
+
+  clearLine() {
+    let position = this.props.linePosition;
+    position += LINE_SPEED / FRAME_RATE;
+    if (position > this.props.grid.getLength()) {
+      position = 0;
+    }
+    this.clearBlocksAt(Math.floor(position - 0.05));
+    this.props.updateLinePosition(position, 0);
+  }
+
+  clearBlocksAt(x) {
+    return;
   }
 
   handleInstructionsUpdate(instruction) {
@@ -79,6 +98,13 @@ export class Engine extends React.Component {
     this.blockDropID = setInterval(
       () => this.blockDrop(),
       3000
+    );
+  }
+
+  startLineTimer() {
+    this.lineID = setInterval(
+      () => this.clearLine(),
+      1000 / FRAME_RATE
     );
   }
 

@@ -8,6 +8,10 @@ const tableStyle = {
   margin: 'auto'
 };
 
+const container_style = {
+  display: 'inline-flex'
+};
+
 const cellStyle = {
   border: '2px solid gray',
   width: '42px',
@@ -313,6 +317,20 @@ export class BoardUI extends React.Component {
       table[y] = <tr key={y}>{table[y]}</tr>;
     }
 
-    return <table style={ tableStyle }><tbody>{table}</tbody></table>;
+    const line_style = {
+      borderLeft: '2px solid white',
+      position: 'relative',
+      top: '0px',
+      left: `${this.props.linePosition / this.props.grid.getLength() * 100}%`,
+      height: '100%',
+      width: '2px'
+    };
+
+    return (
+      <div style={ container_style }>
+        <div style={ line_style } />
+        <table style={ tableStyle }><tbody>{table}</tbody></table>
+      </div>
+    );
   }
 }
