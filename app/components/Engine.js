@@ -2,14 +2,17 @@ const React = require('react');
 import { Instructions } from '../utils/constants';
 import { now } from '../utils/utils';
 import { Controls } from './Controls';
+import { BlockTypeEnum } from '../utils/constants';
 
-const FRAME_RATE = 30; // frame per sec
+const FRAME_RATE = 60; // frame per sec
 const LINE_SPEED = 4; // blocks per sec
 
 export class Engine extends React.Component {
   constructor(props) {
     super(props);
     this.newBlockTs = null;
+    this.hasActive = false;
+    this.lastLinePos = null;
     this.handleInstructionsUpdate = this.handleInstructionsUpdate.bind(this);
     this.startNewDropTimer = this.startNewDropTimer.bind(this);
   }
@@ -49,15 +52,26 @@ export class Engine extends React.Component {
   clearLine() {
     let position = this.props.linePosition;
     position += LINE_SPEED / FRAME_RATE;
-    if (position > this.props.grid.getLength()) {
+    if (position >= this.props.grid.getLength()) {
       position = 0;
     }
-    this.clearBlocksAt(Math.floor(position - 0.05));
-    this.props.updateLinePosition(position, 0);
-  }
 
-  clearBlocksAt(x) {
-    return;
+    let count = 0;
+    const nextLinePos = position - 0.05 < 0 ? 0 : Math.floor(position - 0.05);
+
+    if (nextLinePos !== this.lastLinePos) {
+      let grid = this.props.grid;
+      this.lastLinePos = nextLinePos;
+      const has_active = grid.setColInactive(nextLinePos);
+
+      if ((!has_active && this.hasActive)) {
+        count = grid.clearBlocksUpTo(nextLinePos - 1);
+        this.props.updateGrid(this.props.grid);
+      }
+      this.hasActive = has_active;
+    }
+
+    this.props.updateLinePosition(position, count);
   }
 
   handleInstructionsUpdate(instruction) {

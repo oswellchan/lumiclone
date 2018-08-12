@@ -8,11 +8,18 @@ const tableStyle = {
   margin: 'auto'
 };
 
-const container_style = {
+const containerStyle = {
   display: 'inline-flex'
 };
 
 const cellStyle = {
+  border: '2px solid gray',
+  width: '42px',
+  height: '42px',
+  boxSizing: 'border-box'
+};
+
+const inactiveStyle = {
   border: '2px solid gray',
   width: '42px',
   height: '42px',
@@ -99,6 +106,10 @@ const BTM_1X2 = 1 << 4 | 1 << 1; // 000010010
 export class BoardUI extends React.Component {
   generateCellStyle(block) {
     if (block.type === BlockTypeEnum.NONE) {
+      return cellStyle;
+    }
+
+    if (block.state === BlockStateEnum.INACTIVE) {
       return cellStyle;
     }
 
@@ -327,7 +338,7 @@ export class BoardUI extends React.Component {
     };
 
     return (
-      <div style={ container_style }>
+      <div style={ containerStyle }>
         <div style={ line_style } />
         <table style={ tableStyle }><tbody>{table}</tbody></table>
       </div>
