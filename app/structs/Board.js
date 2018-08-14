@@ -18,8 +18,12 @@ export class Board extends CompositeBlock {
 
     for (let i = 0; i < block.getLength(); i += 1) {
       for (let j = block.getHeight() - 1; j >= 0; j -= 1) {
-        if (this.getValue(x + i, y + j).type !== BlockTypeEnum.NONE) {
-          return true;
+        try {
+          if (this.getValue(x + i, y + j).type !== BlockTypeEnum.NONE) {
+            return true;
+          }
+        } catch (err) {
+          return false;
         }
       }
     }

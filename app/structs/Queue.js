@@ -34,4 +34,12 @@ export class Queue {
 
     return deq;
   }
+
+  toArray() {
+    let array = [];
+    for (let i = 0; i < this.size(); i += 1) {
+      array.push(this.store[this.current + i]);
+    }
+    return array;
+  }
 }

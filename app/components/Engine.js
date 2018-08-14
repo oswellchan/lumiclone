@@ -2,7 +2,6 @@ const React = require('react');
 import { Instructions } from '../utils/constants';
 import { now } from '../utils/utils';
 import { Controls } from './Controls';
-import { BlockTypeEnum } from '../utils/constants';
 
 const FRAME_RATE = 60; // frame per sec
 const LINE_SPEED = 4; // blocks per sec
@@ -14,7 +13,6 @@ export class Engine extends React.Component {
     this.hasActive = false;
     this.lastLinePos = null;
     this.handleInstructionsUpdate = this.handleInstructionsUpdate.bind(this);
-    this.startNewDropTimer = this.startNewDropTimer.bind(this);
   }
 
   componentDidMount() {

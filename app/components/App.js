@@ -3,6 +3,10 @@ import { Game } from './Game';
 
 export class App extends React.Component {
   render() {
-    return <Game length={16} height={10} />;
+    return (
+      <div style={{ backgroundColor: 'black' }}>
+        <Game length={16} height={10} />;
+      </div>
+    );
   }
 }

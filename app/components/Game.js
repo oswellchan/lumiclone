@@ -23,12 +23,22 @@ export class Game extends React.Component {
       instructions: null,
       linePosition: 0,
       currCount: 0,
-      totalCount: 0
+      totalCount: 0,
+      timeLimit: this.props.timeLimit
     };
+
+    this.timerID = setInterval(
+      () => this.setState({ timeLimit: this.state.timeLimit - 1 }),
+      1000
+    );
 
     this.handleGridUpdate = this.handleGridUpdate.bind(this);
     this.handleQueueUpdate = this.handleQueueUpdate.bind(this);
     this.handleLineUpdate = this.handleLineUpdate.bind(this);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
   }
 
   generateNextBlock() {
@@ -51,7 +61,7 @@ export class Game extends React.Component {
   generateBlockStartingPos() {
     return {
       x: Math.floor(this.props.length / 2) - 1,
-      y: 0
+      y: -2
     };
   }
 
@@ -94,6 +104,7 @@ export class Game extends React.Component {
           currBlock={this.state.currBlock}
           currBlockLocation={this.state.currBlockLocation}
           linePosition={this.state.linePosition}
+          timeLimit={this.state.timeLimit}
           updateGrid={this.handleGridUpdate}
           updateQueue={this.handleQueueUpdate}
           updateLinePosition={this.handleLineUpdate}/>
@@ -101,8 +112,9 @@ export class Game extends React.Component {
           grid={this.state.grid}
           currBlock={this.state.currBlock}
           currBlockLocation={this.state.currBlockLocation}
-          queue={this.state.queue}
-          linePosition={this.state.linePosition}/>
+          queue={this.state.nextBlocks.toArray()}
+          linePosition={this.state.linePosition}
+          timeLimit={this.state.timeLimit}/>
       </div>
     );
   }

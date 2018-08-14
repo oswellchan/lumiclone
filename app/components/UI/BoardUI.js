@@ -5,11 +5,26 @@ import { Orange, DarkOrange, OffWhite, DarkOffWhite } from './constants';
 const tableStyle = {
   backgroundColor: 'black',
   borderCollapse: 'collapse',
-  margin: 'auto'
+  margin: 'auto',
+  borderTopStyle: 'hidden'
+};
+
+const queueStyle = {
+  marginLeft: 0,
+  borderCollapse: 'collapse',
+  border: '1px solid black'
 };
 
 const containerStyle = {
-  display: 'inline-flex'
+  display: 'inline-flex',
+  position: 'relative'
+};
+
+const emptyStyle = {
+  backgroundColor: 'black',
+  width: '42px',
+  height: '42px',
+  boxSizing: 'border-box'
 };
 
 const cellStyle = {
@@ -298,7 +313,7 @@ export class BoardUI extends React.Component {
     const table = [];
     const has_set = [];
 
-    for (let i = 0; i < this.props.grid.getHeight(); i += 1) {
+    for (let i = 0; i < this.props.grid.getHeight() + 2; i += 1) {
       let table_row = [];
       let has_set_row = [];
       for (let j = 0; j < this.props.grid.getLength(); j += 1) {
@@ -312,7 +327,13 @@ export class BoardUI extends React.Component {
     // Draw grid
     for (let y = 0; y < this.props.grid.getHeight(); y += 1) {
       for (let x = 0; x < this.props.grid.getLength(); x += 1) {
-        this.setGridStyle(x, y, table, has_set);
+        this.setGridStyle(x, y, table.slice(2), has_set.slice(2));
+      }
+    }
+
+    for (let y = 0; y < 2; y += 1) {
+      for (let x = 0; x < this.props.grid.getLength(); x += 1) {
+        table[y][x] = this.generateCell(x, emptyStyle);
       }
     }
 
@@ -320,27 +341,53 @@ export class BoardUI extends React.Component {
     for (let y = 0; y < this.props.currBlock.getHeight(); y += 1) {
       for (let x = 0; x < this.props.currBlock.getLength(); x += 1) {
         const style = this.generateCellStyle(this.props.currBlock.getValue(x, y));
-        table[loc.y + y][loc.x + x] = this.generateCell(loc.x + x, style);
+        table[loc.y + y + 2][loc.x + x] = this.generateCell(loc.x + x, style);
       }
     }
 
-    for (let y = 0; y < this.props.grid.getHeight(); y += 1) {
+    for (let y = 0; y < table.length; y += 1) {
       table[y] = <tr key={y}>{table[y]}</tr>;
+    }
+
+    // Draw queue
+    let block_queue = [];
+    let queue = this.props.queue;
+    for (let i = queue.length - 1; i >= 0; i -= 1) {
+      let block = [];
+      for (let y = 0; y < this.props.currBlock.getHeight(); y += 1) {
+        let row = [];
+        for (let x = 0; x < this.props.currBlock.getLength(); x += 1) {
+          const style = this.generateCellStyle(queue[i].getValue(x, y));
+          row.push(this.generateCell(x, style));
+        }
+        block.push(<tr key={y}>{row}</tr>);
+      }
+
+      block_queue.push(
+        <th style={{border: '1px solid black', padding: 5}} key={i}>
+          <table style={ tableStyle }><tbody>{block}</tbody></table>
+        </th>
+      );
     }
 
     const line_style = {
       borderLeft: '2px solid white',
-      position: 'relative',
-      top: '0px',
+      position: 'absolute',
+      top: `${ 2 / table.length * 100}%`,
       left: `${this.props.linePosition / this.props.grid.getLength() * 100}%`,
-      height: '100%',
+      height: `${ ((table.length - 2) / table.length) * 100}%`,
       width: '2px'
     };
 
     return (
-      <div style={ containerStyle }>
-        <div style={ line_style } />
-        <table style={ tableStyle }><tbody>{table}</tbody></table>
+      <div>
+        <table style={ queueStyle }><tbody><tr>{block_queue}</tr></tbody></table>
+        <div>
+          <div style={ containerStyle }>
+            <div style={ line_style } />
+            <table style={ tableStyle }><tbody>{table}</tbody></table>
+          </div>
+        </div>
       </div>
     );
   }
