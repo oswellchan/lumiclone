@@ -10,7 +10,7 @@ export class CompositeBlock {
         tempRow.push({
           type: BlockTypeEnum.NONE,
           state: BlockStateEnum.NORMAL,
-          count: null
+          count: 0
         });
       }
       this.grid.push(tempRow);
@@ -63,7 +63,7 @@ export class CompositeBlock {
       this.grid[x][y].state = state;
     }
 
-    if (state !== null) {
+    if (count !== null) {
       this.grid[x][y].count = count;
     }
   }

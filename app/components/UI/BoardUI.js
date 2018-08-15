@@ -158,7 +158,7 @@ export class BoardUI extends React.Component {
 
     const block = this.props.grid.getValue(x, y);
     let style = this.generateCellStyle(block);
-    if (block.state === BlockStateEnum.NORMAL || !block.count) {
+    if (block.state !== BlockStateEnum.ACTIVE) {
       has_set[y][x] = true;
       table[y][x] = this.generateCell(x, style);
       return;
@@ -297,7 +297,10 @@ export class BoardUI extends React.Component {
         idx -= 1;
         try {
           const block = this.props.grid.getValue(x + j, y + i);
-          if (block.count === start_block.count && block.type === start_block.type) {
+          if (
+            block.type === start_block.type &&
+            block.count === start_block.count
+          ) {
             pattern |= (1 << idx);
           }
         } catch (err) {
@@ -324,13 +327,25 @@ export class BoardUI extends React.Component {
       has_set.push(has_set_row);
     }
 
+    let grid_table = table.slice(2);
+
     // Draw grid
     for (let y = 0; y < this.props.grid.getHeight(); y += 1) {
       for (let x = 0; x < this.props.grid.getLength(); x += 1) {
-        this.setGridStyle(x, y, table.slice(2), has_set.slice(2));
+        this.setGridStyle(x, y, grid_table, has_set.slice(2));
       }
     }
 
+    for (let y = 0; y < this.props.grid.getHeight(); y += 1) {
+      for (let x = 0; x < this.props.grid.getLength(); x += 1) {
+        const block = this.props.grid.getValue(x, y);
+        if (block.state === BlockStateEnum.INACTIVE) {
+          grid_table[y][x] = this.generateCell(x, this.generateCellStyle(block));
+        }
+      }
+    }
+
+    // Draw empty space above grid
     for (let y = 0; y < 2; y += 1) {
       for (let x = 0; x < this.props.grid.getLength(); x += 1) {
         table[y][x] = this.generateCell(x, emptyStyle);

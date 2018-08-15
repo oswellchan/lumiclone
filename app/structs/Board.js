@@ -180,7 +180,7 @@ export class Board extends CompositeBlock {
           this.setBlockAt(i, j, {
             type: BlockTypeEnum.NONE,
             state: BlockStateEnum.NORMAL,
-            count: null
+            count: 0
           });
         }
       }
@@ -197,7 +197,7 @@ export class Board extends CompositeBlock {
               this.setBlockAt(i, k, {
                 type: BlockTypeEnum.NONE,
                 state: BlockStateEnum.NORMAL,
-                count: null
+                count: 0
               });
               break;
             }

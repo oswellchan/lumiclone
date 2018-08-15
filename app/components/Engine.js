@@ -3,7 +3,7 @@ import { Instructions } from '../utils/constants';
 import { now } from '../utils/utils';
 import { Controls } from './Controls';
 
-const FRAME_RATE = 60; // frame per sec
+const FRAME_RATE = 50; // frame per sec
 const LINE_SPEED = 4; // blocks per sec
 
 export class Engine extends React.Component {

@@ -114,6 +114,7 @@ export class Game extends React.Component {
           currBlockLocation={this.state.currBlockLocation}
           queue={this.state.nextBlocks.toArray()}
           linePosition={this.state.linePosition}
+          score={this.state.totalCount}
           timeLimit={this.state.timeLimit}/>
       </div>
     );
