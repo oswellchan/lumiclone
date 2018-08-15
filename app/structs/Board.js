@@ -57,6 +57,8 @@ export class Board extends CompositeBlock {
       for (let x = 0; x < this.getLength(); x += 1) {
         if (this.getValue(x, y).state !== BlockStateEnum.INACTIVE) {
           this.setBlockAt(x, y, { state: BlockStateEnum.NORMAL, count: 0 });
+        } else {
+          this.setBlockAt(x, y, { count: 0 });
         }
       }
     }
@@ -77,19 +79,32 @@ export class Board extends CompositeBlock {
 
       if (this.has2x2BlockPattern(x, y, t)) {
         count += 1;
-        let tl = this.getValue(x, y).count;
-        let tr = this.getValue(x + 1, y).count;
-        let bl = this.getValue(x, y + 1).count;
-        let br = this.getValue(x + 1, y + 1).count;
+        let tl = this.getValue(x, y);
+        let tr = this.getValue(x + 1, y);
+        let bl = this.getValue(x, y + 1);
+        let br = this.getValue(x + 1, y + 1);
 
-        if (tr && !tl && !bl && !br) {
-          this.setBlockAt(x + 1, y, { state: BlockStateEnum.ACTIVE, count });
+        if (tr.count && !tl.count && !bl.count && !br.count) {
+          let state = tr.state === BlockStateEnum.INACTIVE ? BlockStateEnum.INACTIVE : BlockStateEnum.ACTIVE;
+          this.setBlockAt(x + 1, y, { state, count });
         }
 
-        if (!tl) { this.setBlockAt(x, y, { state: BlockStateEnum.ACTIVE, count }); }
-        if (!tr) { this.setBlockAt(x + 1, y, { state: BlockStateEnum.ACTIVE, count }); }
-        if (!bl) { this.setBlockAt(x, y + 1, { state: BlockStateEnum.ACTIVE, count }); }
-        if (!br) { this.setBlockAt(x + 1, y + 1, { state: BlockStateEnum.ACTIVE, count }); }
+        if (!tl.count) {
+          let state = tl.state === BlockStateEnum.INACTIVE ? BlockStateEnum.INACTIVE : BlockStateEnum.ACTIVE;
+          this.setBlockAt(x, y, { state, count });
+        }
+        if (!tr.count) {
+          let state = tr.state === BlockStateEnum.INACTIVE ? BlockStateEnum.INACTIVE : BlockStateEnum.ACTIVE;
+          this.setBlockAt(x + 1, y, { state, count });
+        }
+        if (!bl.count) {
+          let state = bl.state === BlockStateEnum.INACTIVE ? BlockStateEnum.INACTIVE : BlockStateEnum.ACTIVE;
+          this.setBlockAt(x, y + 1, { state, count });
+        }
+        if (!br.count) {
+          let state = br.state === BlockStateEnum.INACTIVE ? BlockStateEnum.INACTIVE : BlockStateEnum.ACTIVE;
+          this.setBlockAt(x + 1, y + 1, { state, count });
+        }
       }
 
       y -= 1;
@@ -119,11 +134,20 @@ export class Board extends CompositeBlock {
       let bl = this.getValue(x, y + 1);
       let br = this.getValue(x + 1, y + 1);
 
+      if (tl.state === BlockStateEnum.ACTIVE) {
+        return (
+          tl.type === t && tl.state !== BlockStateEnum.INACTIVE &&
+          tr.type === t && tr.state !== BlockStateEnum.INACTIVE &&
+          bl.type === t && bl.state !== BlockStateEnum.INACTIVE &&
+          br.type === t && br.state !== BlockStateEnum.INACTIVE
+        );
+      }
+
       return (
-        tl.type === t && tl.state !== BlockStateEnum.INACTIVE &&
-        tr.type === t && tr.state !== BlockStateEnum.INACTIVE &&
-        bl.type === t && bl.state !== BlockStateEnum.INACTIVE &&
-        br.type === t && br.state !== BlockStateEnum.INACTIVE
+        tl.type === t &&
+        tr.type === t &&
+        bl.type === t &&
+        br.type === t
       );
     } catch (err) {
       return false;
