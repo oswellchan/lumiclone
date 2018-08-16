@@ -23,7 +23,7 @@ export class Controls extends React.Component {
     document.addEventListener('keyup', this.handleKeyUp, false);
     this.updateID = setInterval(
       () => this.sendInstruction(),
-      1000 / 45
+      1000 / 100
     );
   }
 
@@ -38,9 +38,9 @@ export class Controls extends React.Component {
       return;
     }
 
-    let time_limit = 200;
+    let time_limit = 150;
     if (this.currInstruction === Instructions.DOWN) {
-      time_limit = 100;
+      time_limit = 0;
     }
 
     if (!this.lastTime || now() - this.lastTime < time_limit) {
