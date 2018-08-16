@@ -39,6 +39,10 @@ export class Board extends CompositeBlock {
       for (let j = block.getHeight() - 1; j >= 0; j -= 1) {
         for (let k = this.getHeight() - 1; k >= 0; k -= 1) {
           if (this.getValue(x + i, k).type === BlockTypeEnum.NONE) {
+            if (k < 0) {
+              continue;
+            }
+
             this.setBlockAt(x + i, k, block.getValue(i, j));
             break;
           }
