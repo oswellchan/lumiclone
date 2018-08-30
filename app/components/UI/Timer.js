@@ -6,14 +6,14 @@ export class Timer extends React.Component {
     return (
       <div>
         <div style={{
-          fontFamily: 'helvetica',
+          fontFamily: 'arial',
           fontSize: 40,
           color: 'white'
         }}>
           Time
         </div>
         <span style={{
-          fontFamily: 'helvetica',
+          fontFamily: 'arial',
           fontSize: 100,
           color: 'white'
         }}>

@@ -6,14 +6,14 @@ export class Score extends React.Component {
     return (
       <div>
         <div style={{
-          fontFamily: 'helvetica',
+          fontFamily: 'arial',
           fontSize: 40,
           color: 'white'
         }}>
           Score
         </div>
         <span style={{
-          fontFamily: 'helvetica',
+          fontFamily: 'arial',
           fontSize: 100,
           color: 'white'
         }}>

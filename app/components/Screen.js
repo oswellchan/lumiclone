@@ -2,11 +2,14 @@ const React = require('react');
 import { BoardUI } from './UI/BoardUI';
 import { Score } from './UI/Score';
 import { Timer } from './UI/Timer';
+import { Overlay } from './UI/Overlay';
+import { GameState } from '../utils/constants';
 
 
 const containerStyle = {
   display: 'flex',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  position: 'relative'
 };
 
 const timeScoreStyle = {
@@ -18,6 +21,30 @@ const timeScoreStyle = {
 
 export class Screen extends React.Component {
   render() {
+    let value = null;
+
+    if (this.props.gameState === GameState.STARTING) {
+      value = this.props.countdown;
+      if (this.props.countdown <= 0) {
+        value = 'Go';
+      }
+    }
+
+    if (this.props.gameState === GameState.ENDED) {
+      value = <i onClick={this.props.restartGame} className='fas fa-redo-alt' />;
+    }
+
+    let overlay = null;
+
+    if (value) {
+      const item = (<span style={{
+        color: 'white',
+        fontFamily: 'arial',
+        fontSize: '10em'
+      }}>{ value }</span>);
+      overlay = <Overlay content={ item } />;
+    }
+
     return (
       <div>
         <div style={ containerStyle }>
@@ -32,6 +59,7 @@ export class Screen extends React.Component {
             <Timer timeLimit={this.props.timeLimit} />
             <Score score={this.props.score} />
           </div>
+          { overlay }
         </div>
       </div>
     );

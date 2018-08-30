@@ -379,7 +379,7 @@ export class BoardUI extends React.Component {
       }
 
       block_queue.push(
-        <th style={{border: '1px solid black', padding: 5}} key={i}>
+        <th style={{border: '1px solid black', padding: '5 0 5 0'}} key={i}>
           <table style={ tableStyle }><tbody>{block}</tbody></table>
         </th>
       );
@@ -395,7 +395,7 @@ export class BoardUI extends React.Component {
     };
 
     return (
-      <div>
+      <div style={{ padding: 20 }}>
         <table style={ queueStyle }><tbody><tr>{block_queue}</tr></tbody></table>
         <div>
           <div style={ containerStyle }>

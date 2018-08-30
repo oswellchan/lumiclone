@@ -17,3 +17,9 @@ export const Instructions = {
   ROTATE_L: 3,
   ROTATE_R: 4
 };
+
+export const GameState = {
+  STARTING: 0,
+  IN_PROGRESS: 1,
+  ENDED: 2
+};
