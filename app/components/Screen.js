@@ -8,7 +8,6 @@ import { GameState } from '../utils/constants';
 
 const containerStyle = {
   display: 'flex',
-  justifyContent: 'center',
   position: 'relative'
 };
 
@@ -48,16 +47,20 @@ export class Screen extends React.Component {
     return (
       <div>
         <div style={ containerStyle }>
-          <BoardUI
-            grid={this.props.grid}
-            currBlock={this.props.currBlock}
-            currBlockLocation={this.props.currBlockLocation}
-            linePosition={this.props.linePosition}
-            queue={this.props.queue}
-          />
-          <div style={ timeScoreStyle }>
-            <Timer timeLimit={this.props.timeLimit} />
-            <Score score={this.props.score} />
+          <div style={{ display: 'flex', flexBasis: '65%', justifyContent: 'flex-end' }}>
+            <BoardUI
+              grid={this.props.grid}
+              currBlock={this.props.currBlock}
+              currBlockLocation={this.props.currBlockLocation}
+              linePosition={this.props.linePosition}
+              queue={this.props.queue}
+            />
+          </div>
+          <div style={{ display: 'flex', flexBasis: '35%', justifyContent: 'flex-start' }}>
+            <div style={ timeScoreStyle }>
+              <Timer timeLimit={this.props.timeLimit} />
+              <Score score={this.props.score} />
+            </div>
           </div>
           { overlay }
         </div>
