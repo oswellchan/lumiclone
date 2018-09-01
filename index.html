@@ -3,8 +3,76 @@
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+      }
+      .empty {
+        flex-grow: 0.3;
+        flex-shrink: 0;
+      }
+      .keycapContainer {
+        display: flex;
+        flex-grow: 1;
+      }
+      .left {
+        justify-content: flex-end;
+      }
+      .right {
+        justify-content: flex-start;
+      }
+      .keyGroup {
+        display: flex;
+        font-size: 1.5em;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+      .keycap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 5px;
+        border: 2px solid black;
+        width: 50px;
+        height: 50px; 
+        font-family: "helvetica";
+        text-align: center;
+        vertical-align: middle;
+        margin: 0px 5px 10px 5px;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
+    <div class="container">
+      <div class="keycapContainer left">
+        <div class="keyGroup">
+          <div class="keycap">A</div>
+          <i class="fas fa-long-arrow-alt-left"></i>
+        </div>
+        <div class="keyGroup">
+          <div class="keycap">S</div>
+          <i class="fas fa-long-arrow-alt-down"></i>
+        </div>
+        <div class="keyGroup">
+          <div class="keycap">D</div>
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+      </div>
+      <div class="empty"></div>
+      <div class="keycapContainer right">
+        <div class="keyGroup">
+          <div class="keycap">K</div>
+          <i class="fas fa-undo"></i>
+        </div>
+        <div class="keyGroup">
+          <div class="keycap">L</div>
+          <i class="fas fa-redo"></i>
+        </div>
+      </div>
+    <div>
   <script type="text/javascript" src="lumiclone.js"></script></body>
 </html>
