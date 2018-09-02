@@ -7,7 +7,7 @@ Play it [here](http://oswellchan.github.io/lumiclone/).
 ![Lumiclone Screenshot](http://oswellchan.github.io/lumiclone/assets/imgs/screenshot.png)
 
 ## Motivations
-I played a lot of Lumines on my cellphone back in 2008 before my phone eventually broke. As the years gone past, there always was the itch to play, but I was too cheap to shell out $8.50 to buy the actual game. 10 years later, having just learnt some React, I thought: "Hey Lumines like Tetris right? Should be a light exercise to bang out a workable version."
+I played a lot of Lumines on my cellphone back in 2008 before my phone eventually broke. As the years gone past, there always was the itch to play, but I was too cheap to shell out $8.50 to buy the actual game. 10 years later, having just learnt some React, I thought: "Hey Lumines' like Tetris right? Should be a light exercise to bang out a workable version."
 
 Fast forward 11 months (with about 7 months of hiatus), this POC is finally ready. Turns out the light exercise was more of a marathon ¯\\\_(ツ)\_/¯
 
