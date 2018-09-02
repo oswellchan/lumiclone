@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <style>
-      .container {
+      html {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      .instructions {
         display: flex;
         justify-content: center;
         margin: 20px;
@@ -36,18 +43,35 @@
         justify-content: center;
         border-radius: 5px;
         border: 2px solid black;
-        width: 50px;
-        height: 50px; 
+        width: 45px;
+        height: 45px;
         font-family: "helvetica";
         text-align: center;
         vertical-align: middle;
         margin: 0px 5px 10px 5px;
       }
+      .ghlink {
+        color: inherit;
+        text-decoration: none;
+        font-size: 2em;
+        margin: 5px;
+      }
+      .finger {
+        font-size: 2em;
+      }
+      .footer {
+        position:absolute;
+        text-align: center;
+        bottom:0;
+        width:100%;
+        background: lightgrey;
+        padding: 2px;
+      }
     </style>
   </head>
   <body>
     <div id="app"></div>
-    <div class="container">
+    <div class="instructions">
       <div class="keycapContainer left">
         <div class="keyGroup">
           <div class="keycap">A</div>
@@ -66,13 +90,16 @@
       <div class="keycapContainer right">
         <div class="keyGroup">
           <div class="keycap">K</div>
-          <i class="fas fa-undo"></i>
+          <i class="fas fa-redo"></i>
         </div>
         <div class="keyGroup">
           <div class="keycap">L</div>
-          <i class="fas fa-redo"></i>
+          <i class="fas fa-undo"></i>
         </div>
       </div>
-    <div>
+    </div>
+    <div class="footer">
+      <a class="fab fa-github ghlink" href="https://github.com/oswellchan/lumiclone"></a>
+    </div>
   <script type="text/javascript" src="lumiclone.js"></script></body>
 </html>

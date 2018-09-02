@@ -21127,11 +21127,11 @@ class Engine extends React.Component {
     const loc = this.props.currBlockLocation;
 
     if (instruction === __WEBPACK_IMPORTED_MODULE_0__utils_constants__["d" /* Instructions */].LEFT) {
-      if (loc.x > 0) {
+      if (loc.x > 0 && !grid.isOverlap(loc.x - 1, loc.y, block)) {
         loc.x -= 1;
       }
     } else if (instruction === __WEBPACK_IMPORTED_MODULE_0__utils_constants__["d" /* Instructions */].RIGHT) {
-      if (loc.x + block.getLength() < grid.getLength()) {
+      if (loc.x + block.getLength() < grid.getLength() && !grid.isOverlap(loc.x + 1, loc.y, block)) {
         loc.x += 1;
       }
     }
@@ -21390,22 +21390,22 @@ const containerStyle = {
 
 const emptyStyle = {
   backgroundColor: 'black',
-  width: '42px',
-  height: '42px',
+  width: '40px',
+  height: '40px',
   boxSizing: 'border-box'
 };
 
 const cellStyle = {
   border: '2px solid gray',
-  width: '42px',
-  height: '42px',
+  width: '40px',
+  height: '40px',
   boxSizing: 'border-box'
 };
 
 const inactiveStyle = {
   border: '2px solid gray',
-  width: '42px',
-  height: '42px',
+  width: '40px',
+  height: '40px',
   boxSizing: 'border-box'
 };
 
