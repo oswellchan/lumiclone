@@ -79,11 +79,14 @@ export class Engine extends React.Component {
     const loc = this.props.currBlockLocation;
 
     if (instruction === Instructions.LEFT) {
-      if (loc.x > 0) {
+      if (loc.x > 0 && !grid.isOverlap(loc.x - 1, loc.y, block)) {
         loc.x -= 1;
       }
     } else if (instruction === Instructions.RIGHT) {
-      if (loc.x + block.getLength() < grid.getLength()) {
+      if (
+        loc.x + block.getLength() < grid.getLength() &&
+        !grid.isOverlap(loc.x + 1, loc.y, block)
+      ) {
         loc.x += 1;
       }
     }
