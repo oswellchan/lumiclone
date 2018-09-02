@@ -22,22 +22,22 @@ const containerStyle = {
 
 const emptyStyle = {
   backgroundColor: 'black',
-  width: '42px',
-  height: '42px',
+  width: '40px',
+  height: '40px',
   boxSizing: 'border-box'
 };
 
 const cellStyle = {
   border: '2px solid gray',
-  width: '42px',
-  height: '42px',
+  width: '40px',
+  height: '40px',
   boxSizing: 'border-box'
 };
 
 const inactiveStyle = {
   border: '2px solid gray',
-  width: '42px',
-  height: '42px',
+  width: '40px',
+  height: '40px',
   boxSizing: 'border-box'
 };
 
