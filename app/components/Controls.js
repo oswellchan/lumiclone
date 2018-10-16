@@ -52,19 +52,20 @@ export class Controls extends React.Component {
 
   handleKeyDown(event) {
     let instruction = null;
-    if (event.key === this.keyMapping.LEFT) {
+    const key = event.key.toLowerCase();
+    if (key === this.keyMapping.LEFT) {
       instruction = Instructions.LEFT;
     }
-    if (event.key === this.keyMapping.RIGHT) {
+    if (key === this.keyMapping.RIGHT) {
       instruction = Instructions.RIGHT;
     }
-    if (event.key === this.keyMapping.DOWN) {
+    if (key === this.keyMapping.DOWN) {
       instruction = Instructions.DOWN;
     }
-    if (event.key === this.keyMapping.ROTATE_L) {
+    if (key === this.keyMapping.ROTATE_L) {
       instruction = Instructions.ROTATE_L;
     }
-    if (event.key === this.keyMapping.ROTATE_R) {
+    if (key === this.keyMapping.ROTATE_R) {
       instruction = Instructions.ROTATE_R;
     }
 
@@ -80,12 +81,13 @@ export class Controls extends React.Component {
   }
 
   handleKeyUp(event) {
+    const key = event.key.toLowerCase();
     if (
-      event.key === this.keyMapping.LEFT ||
-      event.key === this.keyMapping.RIGHT ||
-      event.key === this.keyMapping.DOWN ||
-      event.key === this.keyMapping.ROTATE_L ||
-      event.key === this.keyMapping.ROTATE_R
+      key === this.keyMapping.LEFT ||
+      key === this.keyMapping.RIGHT ||
+      key === this.keyMapping.DOWN ||
+      key === this.keyMapping.ROTATE_L ||
+      key === this.keyMapping.ROTATE_R
     ) {
       this.lastTime = null;
       this.currInstruction = null;
