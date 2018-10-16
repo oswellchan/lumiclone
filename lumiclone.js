@@ -21224,19 +21224,20 @@ class Controls extends React.Component {
 
   handleKeyDown(event) {
     let instruction = null;
-    if (event.key === this.keyMapping.LEFT) {
+    const key = event.key.toLowerCase();
+    if (key === this.keyMapping.LEFT) {
       instruction = __WEBPACK_IMPORTED_MODULE_0__utils_constants__["d" /* Instructions */].LEFT;
     }
-    if (event.key === this.keyMapping.RIGHT) {
+    if (key === this.keyMapping.RIGHT) {
       instruction = __WEBPACK_IMPORTED_MODULE_0__utils_constants__["d" /* Instructions */].RIGHT;
     }
-    if (event.key === this.keyMapping.DOWN) {
+    if (key === this.keyMapping.DOWN) {
       instruction = __WEBPACK_IMPORTED_MODULE_0__utils_constants__["d" /* Instructions */].DOWN;
     }
-    if (event.key === this.keyMapping.ROTATE_L) {
+    if (key === this.keyMapping.ROTATE_L) {
       instruction = __WEBPACK_IMPORTED_MODULE_0__utils_constants__["d" /* Instructions */].ROTATE_L;
     }
-    if (event.key === this.keyMapping.ROTATE_R) {
+    if (key === this.keyMapping.ROTATE_R) {
       instruction = __WEBPACK_IMPORTED_MODULE_0__utils_constants__["d" /* Instructions */].ROTATE_R;
     }
 
@@ -21252,7 +21253,8 @@ class Controls extends React.Component {
   }
 
   handleKeyUp(event) {
-    if (event.key === this.keyMapping.LEFT || event.key === this.keyMapping.RIGHT || event.key === this.keyMapping.DOWN || event.key === this.keyMapping.ROTATE_L || event.key === this.keyMapping.ROTATE_R) {
+    const key = event.key.toLowerCase();
+    if (key === this.keyMapping.LEFT || key === this.keyMapping.RIGHT || key === this.keyMapping.DOWN || key === this.keyMapping.ROTATE_L || key === this.keyMapping.ROTATE_R) {
       this.lastTime = null;
       this.currInstruction = null;
     }
